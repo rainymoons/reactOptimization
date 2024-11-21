@@ -2,7 +2,7 @@ import { memo, useRef } from "react";
 import addTodoStyle from "./AddTodo.module.css";
 import { Alert } from "../ui/Modal";
 
-export default memo(function AddTodo({ onClickAddButtonHandler }) {
+export default memo(function AddTodo({ onClickAddButtonHandler, style }) {
   console.log("Run AddTodo Component");
 
   // ref부터 만든다.
@@ -40,7 +40,7 @@ export default memo(function AddTodo({ onClickAddButtonHandler }) {
   };
 
   return (
-    <div className={addTodoStyle.addTodoWrapper}>
+    <div className={addTodoStyle.addTodoWrapper} style={style}>
       <label className={addTodoStyle.addTodoLabel} htmlFor="task">
         Task
       </label>

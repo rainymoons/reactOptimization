@@ -1,12 +1,18 @@
 import Todo from "./Todo";
 import AddTodo from "./AddTodo";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 export default function TodoList() {
   console.log("Run TodoList Component");
 
   const [todoList, setTodoList] = useState([]);
 
+  // 변경되지 않게 하기 위해
+  const addTodoStyle = useMemo(() => {
+    return {
+      backgroundColor: "#FF0",
+    };
+  }, []);
   // 재생성을 고려하는 함수, 의존배열
   // tempFunction에는 메모이제이션 되어있는 함수가 들어간다.
   const tempFunction = useCallback(() => {}, []);
@@ -40,6 +46,7 @@ export default function TodoList() {
       <AddTodo
         // setTodoList={setTodoList}
         onClickAddButtonHandler={onClickAddButtonHandler}
+        style={addTodoStyle}
       />
     </div>
   );
