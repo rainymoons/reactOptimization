@@ -2,7 +2,7 @@ import { memo, useRef } from "react";
 import addTodoStyle from "./AddTodo.module.css";
 import { Alert } from "../ui/Modal";
 
-export default memo(function AddTodo({ setTodoList }) {
+export default memo(function AddTodo({ onClickAddButtonHandler }) {
   console.log("Run AddTodo Component");
 
   // ref부터 만든다.
@@ -11,7 +11,7 @@ export default memo(function AddTodo({ setTodoList }) {
   const alertRef = useRef();
 
   // task 내용과 duedate내용을 가져와서 setTodoList에 추가
-  const onClickAddButtonHandler = () => {
+  const onClickHandler = () => {
     const task = taskRef.current.value;
     const dueDate = dueDateRef.current.value;
 
@@ -31,15 +31,8 @@ export default memo(function AddTodo({ setTodoList }) {
       //alert("내용을 입력해야 합니다.");
       return;
     }
-    setTodoList((prevTodoList) => [
-      {
-        id: prevTodoList.length,
-        isDone: false,
-        task,
-        dueDate,
-      },
-      ...prevTodoList,
-    ]);
+
+    onClickAddButtonHandler(task, dueDate);
 
     // 입력값 초기화
     taskRef.current.value = "";
@@ -64,10 +57,7 @@ export default memo(function AddTodo({ setTodoList }) {
       </label>
       <input type="date" id="due-date" ref={dueDateRef} />
 
-      <button
-        className={addTodoStyle.addTodoButton}
-        onClick={onClickAddButtonHandler}
-      >
+      <button className={addTodoStyle.addTodoButton} onClick={onClickHandler}>
         등록
       </button>
 
