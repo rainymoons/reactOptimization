@@ -1,8 +1,10 @@
-import { useRef } from "react";
+import { memo, useRef } from "react";
 import addTodoStyle from "./AddTodo.module.css";
 import { Alert } from "../ui/Modal";
 
-export default function AddTodo({ setTodoList }) {
+export default memo(function AddTodo({ setTodoList }) {
+  console.log("Run AddTodo Component");
+
   // ref부터 만든다.
   const taskRef = useRef();
   const dueDateRef = useRef();
@@ -72,4 +74,4 @@ export default function AddTodo({ setTodoList }) {
       <Alert alertRef={alertRef} />
     </div>
   );
-}
+});

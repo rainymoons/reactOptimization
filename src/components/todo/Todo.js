@@ -2,6 +2,8 @@ import todoStyle from "./Todo.module.css";
 
 //onClickDoneHandler이 앱에 있는 스테이트를 바꾸는 것
 export default function Todo({ todo, setTodoList }) {
+  console.log("Run Todo Component");
+
   // todo는 객체리터럴이므로 분해
   const { id, isDone, task, dueDate } = todo;
 

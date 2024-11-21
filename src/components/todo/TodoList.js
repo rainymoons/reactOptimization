@@ -3,6 +3,8 @@ import AddTodo from "./AddTodo";
 import { useState } from "react";
 
 export default function TodoList() {
+  console.log("Run TodoList Component");
+
   const [todoList, setTodoList] = useState([]);
 
   return (

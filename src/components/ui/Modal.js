@@ -4,6 +4,8 @@ import modalStyle from "./Modal.module.css";
 
 // alertRef만 받아옴
 export function Alert({ alertRef }) {
+  console.log("Run Alert Component");
+
   const modalRef = useRef();
 
   const [message, setMessage] = useState([]);
