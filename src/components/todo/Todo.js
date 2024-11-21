@@ -1,9 +1,7 @@
-import { useContext } from "react";
 import todoStyle from "./Todo.module.css";
-import { TodoContext } from "./contexts/TodoContext";
 
 //onClickDoneHandler이 앱에 있는 스테이트를 바꾸는 것
-export default function Todo({ todo }) {
+export default function Todo({ todo, setTodoList }) {
   // todo는 객체리터럴이므로 분해
   const { id, isDone, task, dueDate } = todo;
 
@@ -13,10 +11,20 @@ export default function Todo({ todo }) {
     textDecoration: isDone ? "line-through" : "none",
   };
 
-  const { contextDone } = useContext(TodoContext);
   const onClickDoneHandler = (event) => {
     // TodoContext에 있는 contextDone 함수 호출
-    contextDone(event);
+
+    const checkedDoneId = parseInt(event.target.value);
+    const isChecked = event.target.checked;
+
+    setTodoList((prevTodoList) =>
+      prevTodoList.map((todo) => {
+        if (todo.id === checkedDoneId) {
+          todo.isDone = isChecked; // 체크하면 바꿔서 넣어라.
+        }
+        return todo; // 여기서 반환하는 대상은 Map임. 그러면 state를 새로 만드는 것(메모리 주소가 바뀐다.)
+      })
+    );
   };
 
   return (

@@ -1,29 +1,43 @@
-import { useContext, useRef } from "react";
+import { useRef } from "react";
 import addTodoStyle from "./AddTodo.module.css";
 import { Alert } from "../ui/Modal";
-import { TodoContext } from "./contexts/TodoContext";
 
-export default function AddTodo() {
+export default function AddTodo({ setTodoList }) {
   // ref부터 만든다.
   const taskRef = useRef();
   const dueDateRef = useRef();
   const alertRef = useRef();
-
-  // 훅은 (컴포넌트)함수 내부에서만 사용 가능
-  const { contextAddTodo } = useContext(TodoContext);
 
   // task 내용과 duedate내용을 가져와서 setTodoList에 추가
   const onClickAddButtonHandler = () => {
     const task = taskRef.current.value;
     const dueDate = dueDateRef.current.value;
 
-    // TodoContext에 있는 contextAddTodo를 호출.
-    const result = contextAddTodo(task, dueDate, alertRef);
-
-    if (result) {
-      taskRef.current.value = "";
-      dueDateRef.current.value = "";
+    let alertMessages = [];
+    if (!task) {
+      alertMessages.push("task를 입력하세요.");
     }
+
+    if (!dueDate) {
+      alertMessages.push("due date를 입력하세요.");
+    }
+
+    // Modal을 위한 조건
+    if (!task || !dueDate) {
+      // show에 전달할 배열을 만들어서 넣어줘야 함.
+      alertRef.current.show(alertMessages);
+      //alert("내용을 입력해야 합니다.");
+      return;
+    }
+    setTodoList((prevTodoList) => [
+      {
+        id: prevTodoList.length,
+        isDone: false,
+        task,
+        dueDate,
+      },
+      ...prevTodoList,
+    ]);
 
     // 입력값 초기화
     taskRef.current.value = "";
